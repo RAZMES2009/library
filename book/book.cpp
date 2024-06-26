@@ -1,15 +1,31 @@
 #include "book.h"
 
-void List_book::find_book(const std::string name)
+const int List_book::count_book() const
+{
+    if (is_empty())
+        return 0;
+
+    Book *p = first;
+    int count = 0;
+    
+    while (p)
+    {
+        count++;
+        p = p->next;
+    }
+    return count;
+}
+
+void List_book::find_book(const std::string &name)
 {
     if (is_empty())
         return;
-    if (std::any_cast<const char *>(first->bookInfo.at("bkName")) == name)
+    if (std::any_cast<std::string>(first->bookInfo.at("bkName")) == name)
     {
         get_element_books(first);
         return;
     }
-    if (std::any_cast<const char *>(last->bookInfo.at("bkName")) == name)
+    if (std::any_cast<std::string>(last->bookInfo.at("bkName")) == name)
     {
         get_element_books(last);
         return;
@@ -18,7 +34,7 @@ void List_book::find_book(const std::string name)
     Book *slow = first;
     Book *fast = first->next;
 
-    while (fast && std::any_cast<const char *>(fast->bookInfo.at("bkName")) != name)
+    while (fast && std::any_cast<std::string>(fast->bookInfo.at("bkName")) != name)
     {
         slow = slow->next;
         fast = fast->next;
@@ -58,16 +74,16 @@ void List_book::remove_last()
     last = p;
 }
 
-void List_book::remove_by_name(const std::string name)
+void List_book::remove_by_name(const std::string &name)
 {
     if (is_empty())
         return;
-    if (std::any_cast<const char *>(first->bookInfo.at("bkName")) == name)
+    if (std::any_cast<std::string>(first->bookInfo.at("bkName")) == name)
     {
         remove_first();
         return;
     }
-    if (std::any_cast<const char *>(last->bookInfo.at("bkName")) == name)
+    if (std::any_cast<std::string>(last->bookInfo.at("bkName")) == name)
     {
         remove_last();
         return;
@@ -76,7 +92,7 @@ void List_book::remove_by_name(const std::string name)
     Book *slow = first;
     Book *fast = first->next;
 
-    while (fast && std::any_cast<const char *>(fast->bookInfo.at("bkName")) != name)
+    while (fast && std::any_cast<std::string>(fast->bookInfo.at("bkName")) != name)
     {
         slow = slow->next;
         fast = fast->next;
@@ -90,7 +106,7 @@ void List_book::remove_by_name(const std::string name)
     delete fast;
 }
 
-void List_book::push_back(const std::map<std::string, std::any> bkInfo)
+void List_book::push_back(const std::map<std::string, std::any> &bkInfo)
 {
     Book *p = new Book(bkInfo);
     if (is_empty())
@@ -146,7 +162,7 @@ void List_book::get_element_books(Book *&p) const
     std::cout << std::string(20, '*') << std::endl;
 };
 
-void List_book::rent_book(const int uid, const int bkid)
+void List_book::rent_book(const int &uid, const int &bkid)
 {
     if (is_empty())
         return;

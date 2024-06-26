@@ -23,13 +23,14 @@ class List_person
     void get_persons(Node_person *&) const;
     void remove_first();
     void remove_last();
-    Node_person *get_user_by_nameID(const std::string &name, const int uid);
+    Node_person *get_user_by_nameID(const std::string& name, const int& uid);
 
 public:
     List_person() : first(nullptr), last(nullptr) {};
-    void push_back(std::map<std::string, std::any> &);
+    void push_back(std::map<std::string, std::any>&);
     void print() const;
-    void find(const std::string);
-    void remove(const std::string, const int);
-    bool rent_book(const std::string, const int, const int);
+    void find(const std::string&);
+    void remove(const std::string&, const int&);
+    bool rent_book(const std::string&, const int&, const int&);
+    const int count_user() const;
 };

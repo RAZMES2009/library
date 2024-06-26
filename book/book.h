@@ -26,10 +26,11 @@ class List_book
 public:
     List_book() : first(nullptr), last(nullptr) {};
 
-    void push_back(const std::map<std::string, std::any>);
+    void push_back(const std::map<std::string, std::any>&);
     void print(bool) const;
-    void remove_by_name(const std::string);
-    void find_book(const std::string);
-    void rent_book(const int uid, const int bkid);
+    void remove_by_name(const std::string&);
+    void find_book(const std::string&);
+    void rent_book(const int& uid, const int& bkid);
     void set_time(char*);
+    const int count_book() const;
 };

@@ -1,6 +1,22 @@
 #include "./person.h"
 #include "person.h"
 
+const int List_person::count_user() const
+{
+    if (is_empty())
+        return 0;
+
+    Node_person *p = first;
+    int count = 0;
+
+    while (p)
+    {
+        count++;
+        p = p->next;
+    }
+    return count;
+}
+
 void List_person::remove_first()
 {
     if (is_empty())
@@ -29,19 +45,19 @@ void List_person::remove_last()
     last = p;
 }
 
-void List_person::remove(const std::string name, const int id)
+void List_person::remove(const std::string &name, const int &id)
 {
     if (is_empty())
         return;
 
-    if (std::any_cast<const char *>(first->personInfo.at("uFullName")) == name &&
+    if (std::any_cast<std::string>(first->personInfo.at("uFullName")) == name &&
         std::any_cast<int>(first->personInfo.at("uId")) == id)
     {
         remove_first();
         return;
     }
 
-    if (std::any_cast<const char *>(last->personInfo.at("uFullName")) == name &&
+    if (std::any_cast<std::string>(last->personInfo.at("uFullName")) == name &&
         std::any_cast<int>(last->personInfo.at("uId")) == id)
     {
         remove_last();
@@ -51,7 +67,7 @@ void List_person::remove(const std::string name, const int id)
     Node_person *slow = first;
     Node_person *fast = first->next;
 
-    while (fast && (std::any_cast<const char *>(fast->personInfo.at("uFullName")) != name ||
+    while (fast && (std::any_cast<std::string>(fast->personInfo.at("uFullName")) != name ||
                     std::any_cast<int>(fast->personInfo.at("uId")) != id))
     {
         slow = slow->next;
@@ -67,18 +83,18 @@ void List_person::remove(const std::string name, const int id)
     delete fast;
 }
 
-void List_person::find(const std::string name)
+void List_person::find(const std::string &name)
 {
     if (is_empty())
         return;
 
-    if (std::any_cast<const char *>(first->personInfo.at("uFullName")) == name)
+    if (std::any_cast<std::string>(first->personInfo.at("uFullName")) == name)
     {
         get_persons(first);
         return;
     }
 
-    if (std::any_cast<const char *>(last->personInfo.at("uFullName")) == name)
+    if (std::any_cast<std::string>(last->personInfo.at("uFullName")) == name)
     {
         get_persons(last);
         return;
@@ -127,8 +143,8 @@ void List_person::get_persons(Node_person *&p) const
                 std::cout << std::any_cast<int>(val);
             else if (val.type() == typeid(bool))
                 std::cout << std::any_cast<bool>(val);
-            else if (val.type() == typeid(const char *))
-                std::cout << std::any_cast<const char *>(val);
+            else if (val.type() == typeid(std::string))
+                std::cout << std::any_cast<std::string>(val);
             else
                 std::cerr << "Unsupported type";
         }
@@ -141,13 +157,14 @@ void List_person::get_persons(Node_person *&p) const
     std::cout << std::string(20, '*') << std::endl;
 };
 
-bool List_person::rent_book(const std::string name, const int uid, const int bkid)
+bool List_person::rent_book(const std::string &name, const int &uid, const int &bkid)
 {
-    if (is_empty()){
+    if (is_empty())
+    {
         return false;
     }
 
-    if (std::any_cast<const char *>(first->personInfo.at("uFullName")) == name &&
+    if (std::any_cast<std::string>(first->personInfo.at("uFullName")) == name &&
         std::any_cast<int>(first->personInfo.at("uId")) == uid)
     {
         if (!std::any_cast<bool>(first->personInfo.at("isRentBook")))
@@ -158,7 +175,7 @@ bool List_person::rent_book(const std::string name, const int uid, const int bki
         return true;
     }
 
-    if (std::any_cast<const char *>(last->personInfo.at("uFullName")) == name &&
+    if (std::any_cast<std::string>(last->personInfo.at("uFullName")) == name &&
         std::any_cast<int>(last->personInfo.at("uId")) == uid)
     {
         if (!std::any_cast<bool>(last->personInfo.at("isRentBook")))
@@ -182,11 +199,11 @@ bool List_person::rent_book(const std::string name, const int uid, const int bki
     return false;
 }
 
-Node_person *List_person::get_user_by_nameID(const std::string &name, const int uid)
+Node_person *List_person::get_user_by_nameID(const std::string &name, const int &uid)
 {
     Node_person *slow = first;
     Node_person *fast = first->next;
-    while (fast && (std::any_cast<const char *>(fast->personInfo.at("uFullName")) != name ||
+    while (fast && (std::any_cast<std::string>(fast->personInfo.at("uFullName")) != name ||
                     std::any_cast<int>(fast->personInfo.at("uId")) != uid))
     {
         slow = slow->next;
